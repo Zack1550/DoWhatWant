@@ -1,18 +1,28 @@
-name: 'Custom GITHUB_ENV var Demo'
+name: 'Artifcact Demo'
 
-on: workflow_dispatch
+on: push
 
 jobs:
-  gitHubEnv:
-    name: gitHubEnv  # This is the optional human-readable name of the job
+  job_1:
+    name: Upload artifact
     runs-on: ubuntu-latest
     steps:
-      - name: Set the value
-        id: step_one  # Corrected typo here (optional change)
+      - name: "Create Local File"
         run: |
-            echo "action_state=yellow" >> $GITHUB_ENV
+            echo "Archer is awesome!" > my_file.txt
         
-      - name: Use the value
-        id: step_two
-        run: |
-            echo "${{ env.action_state }}" # this will output in yellow
+      - uses: actions/upload-artifact@v2
+        with:
+            name: file
+            path: my_file.txt
+            retention-days: 5
+  
+  job_2:
+    name: Download Artifact
+    runs-on: ubuntu-latest
+    needs: job_1
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+            name: file
+      - run: cat my_file.txt
