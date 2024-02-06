@@ -1,27 +1,28 @@
 name: Basic Workflow
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 
 env:
-    DayOfWeek: Funday
-    testvar: value-1
+  DayOfWeek: Funday
+  testvar: value-1
 
 jobs:
-    mainJob:
-        name: 'Print the env vars'
-        runs-on: ubuntu-latest
+  mainJob:
+    name: 'Print the env vars'
+    runs-on: ubuntu-latest
 
-     env:
-        Greeting: Dear
-        testvar: value-2
-    
+    env:
+      Greeting: Dear
+      testvar: value-2
+
     steps:
-        - name: print-values-of-env-vars
+      - name: print-values-of-env-vars
         run: |
-            echo "$Greeting $First_Name. Today is $DayOfWeek"
-            echo "testvar $testvar"
-            echo "testvar ${{ env.testvar }}"
+          echo "$Greeting $First_Name. Today is $DayOfWeek"
+          echo "testvar $testvar"
+          echo "testvar ${{ env.testvar }}"
+
         env:
-            First_Name: Bridge
-            testvar: value-3
+          First_Name: Bridge
+          testvar: value-3
